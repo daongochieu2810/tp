@@ -30,10 +30,7 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder(Recipe recipe) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(recipe.getName());
-        descriptor.setPhone(recipe.getPhone());
-        descriptor.setEmail(recipe.getEmail());
-        descriptor.setAddress(recipe.getAddress());
-        descriptor.setTags(recipe.getTags());
+
     }
 
     /**
@@ -44,13 +41,6 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
-        return this;
-    }
 
     /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.

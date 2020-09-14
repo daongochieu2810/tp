@@ -17,11 +17,6 @@ import seedu.address.testutil.PersonBuilder;
 
 public class RecipeTest {
 
-    @Test
-    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        Recipe recipe = new PersonBuilder().build();
-        assertThrows(UnsupportedOperationException.class, () -> recipe.getTags().remove(0));
-    }
 
     @Test
     public void isSamePerson() {
@@ -32,7 +27,7 @@ public class RecipeTest {
         assertFalse(ALICE.isSamePerson(null));
 
         // different phone and email -> returns false
-        Recipe editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
+        Recipe editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
         // different name -> returns false
@@ -44,10 +39,6 @@ public class RecipeTest {
                 .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
-        // same name, same email, different attributes -> returns true
-        editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSamePerson(editedAlice));
 
         // same name, same phone, same email, different attributes -> returns true
         editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
@@ -76,9 +67,6 @@ public class RecipeTest {
         Recipe editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different phone -> returns false
-        editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
 
         // different email -> returns false
         editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();

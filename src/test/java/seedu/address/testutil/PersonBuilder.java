@@ -19,7 +19,6 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     private Name name;
-    private Phone phone;
     private Email email;
     private Address address;
     private Set<Tag> tags;
@@ -29,7 +28,6 @@ public class PersonBuilder {
      */
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
@@ -40,10 +38,6 @@ public class PersonBuilder {
      */
     public PersonBuilder(Recipe recipeToCopy) {
         name = recipeToCopy.getName();
-        phone = recipeToCopy.getPhone();
-        email = recipeToCopy.getEmail();
-        address = recipeToCopy.getAddress();
-        tags = new HashSet<>(recipeToCopy.getTags());
     }
 
     /**
@@ -71,14 +65,6 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
-        return this;
-    }
-
-    /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withEmail(String email) {
@@ -87,7 +73,7 @@ public class PersonBuilder {
     }
 
     public Recipe build() {
-        return new Recipe(name, phone, email, address, tags);
+        return new Recipe(name);
     }
 
 }
