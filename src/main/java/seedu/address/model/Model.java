@@ -12,7 +12,7 @@ import seedu.address.model.recipe.Recipe;
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Recipe> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Recipe> PREDICATE_SHOW_ALL_RECIPES = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -53,35 +53,35 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a Recipe with the same identity as {@code Recipe} exists in the address book.
      */
-    boolean hasPerson(Recipe recipe);
+    boolean hasRecipe(Recipe recipe);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Deletes the given Recipe.
+     * The Recipe must exist in the address book.
      */
-    void deletePerson(Recipe target);
+    void deleteRecipe(Recipe target);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Adds the given Recipe.
+     * {@code Recipe} must not already exist in the address book.
      */
-    void addPerson(Recipe recipe);
+    void addRecipe(Recipe recipe);
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given Recipe {@code target} with {@code editedRecipe}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The Recipe identity of {@code editedRecipe} must not be the same as another existing Recipe in the address book.
      */
-    void setPerson(Recipe target, Recipe editedRecipe);
+    void setRecipe(Recipe target, Recipe editedRecipe);
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Recipe> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered Recipe list */
+    ObservableList<Recipe> getFilteredRecipeList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered Recipe list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Recipe> predicate);
+    void updateFilteredRecipeList(Predicate<Recipe> predicate);
 }

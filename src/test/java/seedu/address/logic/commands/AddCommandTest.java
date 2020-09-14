@@ -21,39 +21,39 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.recipe.Recipe;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.RecipeBuilder;
 
 public class AddCommandTest {
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullRecipe_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new AddCommand(null));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Recipe validRecipe = new PersonBuilder().build();
+    public void execute_RecipeAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingRecipeAdded modelStub = new ModelStubAcceptingRecipeAdded();
+        Recipe validRecipe = new RecipeBuilder().build();
 
         CommandResult commandResult = new AddCommand(validRecipe).execute(modelStub);
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validRecipe), commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validRecipe), modelStub.personsAdded);
+        assertEquals(Arrays.asList(validRecipe), modelStub.RecipesAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Recipe validRecipe = new PersonBuilder().build();
+    public void execute_duplicateRecipe_throwsCommandException() {
+        Recipe validRecipe = new RecipeBuilder().build();
         AddCommand addCommand = new AddCommand(validRecipe);
-        ModelStub modelStub = new ModelStubWithPerson(validRecipe);
+        ModelStub modelStub = new ModelStubWithRecipe(validRecipe);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_Recipe, () -> addCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Recipe alice = new PersonBuilder().withName("Alice").build();
-        Recipe bob = new PersonBuilder().withName("Bob").build();
+        Recipe alice = new RecipeBuilder().withName("Alice").build();
+        Recipe bob = new RecipeBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
@@ -70,7 +70,7 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different Recipe -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
@@ -109,7 +109,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addPerson(Recipe recipe) {
+        public void addRecipe(Recipe recipe) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -124,65 +124,65 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean hasPerson(Recipe recipe) {
+        public boolean hasRecipe(Recipe recipe) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deletePerson(Recipe target) {
+        public void deleteRecipe(Recipe target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setPerson(Recipe target, Recipe editedRecipe) {
+        public void setRecipe(Recipe target, Recipe editedRecipe) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Recipe> getFilteredPersonList() {
+        public ObservableList<Recipe> getFilteredRecipeList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Recipe> predicate) {
+        public void updateFilteredRecipeList(Predicate<Recipe> predicate) {
             throw new AssertionError("This method should not be called.");
         }
     }
 
     /**
-     * A Model stub that contains a single person.
+     * A Model stub that contains a single Recipe.
      */
-    private class ModelStubWithPerson extends ModelStub {
+    private class ModelStubWithRecipe extends ModelStub {
         private final Recipe recipe;
 
-        ModelStubWithPerson(Recipe recipe) {
+        ModelStubWithRecipe(Recipe recipe) {
             requireNonNull(recipe);
             this.recipe = recipe;
         }
 
         @Override
-        public boolean hasPerson(Recipe recipe) {
+        public boolean hasRecipe(Recipe recipe) {
             requireNonNull(recipe);
-            return this.recipe.isSamePerson(recipe);
+            return this.recipe.isSameRecipe(recipe);
         }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the Recipe being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Recipe> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingRecipeAdded extends ModelStub {
+        final ArrayList<Recipe> RecipesAdded = new ArrayList<>();
 
         @Override
-        public boolean hasPerson(Recipe recipe) {
+        public boolean hasRecipe(Recipe recipe) {
             requireNonNull(recipe);
-            return personsAdded.stream().anyMatch(recipe::isSamePerson);
+            return RecipesAdded.stream().anyMatch(recipe::isSameRecipe);
         }
 
         @Override
-        public void addPerson(Recipe recipe) {
+        public void addRecipe(Recipe recipe) {
             requireNonNull(recipe);
-            personsAdded.add(recipe);
+            RecipesAdded.add(recipe);
         }
 
         @Override

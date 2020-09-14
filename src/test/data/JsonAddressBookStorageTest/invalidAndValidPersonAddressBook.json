@@ -1,10 +1,10 @@
 {
-  "persons": [ {
-    "name": "Valid Person",
+  "Recipes": [ {
+    "name": "Valid Recipe",
     "email": "hans@example.com",
     "address": "4th street"
   }, {
-    "name": "Person With Invalid Phone Field",
+    "name": "Recipe With Invalid Phone Field",
     "email": "hans@example.com",
     "address": "4th street"
   } ]

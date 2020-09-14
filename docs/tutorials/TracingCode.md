@@ -136,7 +136,7 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
    <div markdown="span" class="alert alert-primary">:bulb: **Tip:** Sometimes you might end up stepping into functions that are not of interest. Simply `step out` of them\!
    </div>
 
-1. The rest of the method seems to exhaustively check for the existence of each possible parameter of the `edit` command and store any possible changes in an `EditPersonDescriptor`. Recall that we can verify the contents of `editPersonDesciptor` through the `Variable` tool window.<br>
+1. The rest of the method seems to exhaustively check for the existence of each possible parameter of the `edit` command and store any possible changes in an `EditRecipeDescriptor`. Recall that we can verify the contents of `editRecipeDesciptor` through the `Variable` tool window.<br>
    ![EditCommand](../images/tracing/EditCommand.png)
 
 1. Let’s continue stepping through until we return to `LogicManager#execute()`.
@@ -152,14 +152,14 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
    @Override
    public CommandResult execute(Model model) throws CommandException {
        ...
-       Person recipeToEdit = lastShownList.get(index.getZeroBased());
-       Person editedRecipe = createEditedPerson(recipeToEdit, editPersonDescriptor);
-       if (!recipeToEdit.isSamePerson(editedRecipe) && model.hasPerson(editedRecipe)) {
-           throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+       Recipe recipeToEdit = lastShownList.get(index.getZeroBased());
+       Recipe editedRecipe = createEditedRecipe(recipeToEdit, editRecipeDescriptor);
+       if (!recipeToEdit.isSameRecipe(editedRecipe) && model.hasRecipe(editedRecipe)) {
+           throw new CommandException(MESSAGE_DUPLICATE_Recipe);
        }
-       model.setPerson(recipeToEdit, editedRecipe);
-       model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-       return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedRecipe));
+       model.setRecipe(recipeToEdit, editedRecipe);
+       model.updateFilteredRecipeList(PREDICATE_SHOW_ALL_RECIPES);
+       return new CommandResult(String.format(MESSAGE_EDIT_Recipe_SUCCESS, editedRecipe));
    }
    ```
 
@@ -181,14 +181,14 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
     */
    public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
        recipes.addAll(
-           source.getPersonList()
+           source.getRecipeList()
                  .stream()
-                 .map(JsonAdaptedPerson::new)
+                 .map(JsonAdaptedRecipe::new)
                  .collect(Collectors.toList()));
    }
    ```
 
-1. It appears that a `JsonAdaptedPerson` is created for each `Person` and then added to the `JsonSerializableAddressBook`.
+1. It appears that a `JsonAdaptedRecipe` is created for each `Recipe` and then added to the `JsonSerializableAddressBook`.
 
 1. We can continue to step through until we return to `MainWindow#executeCommand()`.
 
@@ -245,6 +245,6 @@ the given commands to find exactly what happens.
 
     4.  Add a new command
 
-    5.  Add a new field to `Person`
+    5.  Add a new field to `Recipe`
 
     6.  Add a new entity to the address book

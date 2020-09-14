@@ -19,16 +19,16 @@ import seedu.address.model.recipe.Recipe;
 @JsonRootName(value = "addressbook")
 class JsonSerializableAddressBook {
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_Recipe = "Recipes list contains duplicate Recipe(s).";
 
-    private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedRecipe> Recipes = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given persons.
+     * Constructs a {@code JsonSerializableAddressBook} with the given Recipes.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
-        this.persons.addAll(persons);
+    public JsonSerializableAddressBook(@JsonProperty("Recipes") List<JsonAdaptedRecipe> Recipes) {
+        this.Recipes.addAll(Recipes);
     }
 
     /**
@@ -37,7 +37,7 @@ class JsonSerializableAddressBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        Recipes.addAll(source.getRecipeList().stream().map(JsonAdaptedRecipe::new).collect(Collectors.toList()));
     }
 
     /**
@@ -47,12 +47,12 @@ class JsonSerializableAddressBook {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
-        for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
-            Recipe recipe = jsonAdaptedPerson.toModelType();
-            if (addressBook.hasPerson(recipe)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+        for (JsonAdaptedRecipe jsonAdaptedRecipe : Recipes) {
+            Recipe recipe = jsonAdaptedRecipe.toModelType();
+            if (addressBook.hasRecipe(recipe)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_Recipe);
             }
-            addressBook.addPerson(recipe);
+            addressBook.addRecipe(recipe);
         }
         return addressBook;
     }
