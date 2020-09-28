@@ -38,7 +38,8 @@ public class RecipeBuilder {
         name = recipeToCopy.getName();
         ingredientString = new IngredientString(Arrays.stream(recipeToCopy.getIngredient())
                 .map(item -> item.value)
-                .reduce("", (a, b) -> b.equals("") ? a : b + ", " + a));
+                .reduce("", (a, b) -> a.equals("") ? b : a + ", " + b));
+        System.out.println(ingredientString);
     }
 
     /**

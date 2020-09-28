@@ -28,7 +28,7 @@ public class Recipe {
         this.ingredientString =
                 new IngredientString(Arrays.stream(ingredients)
                         .map(item -> item.value)
-                        .reduce("", (a, b) -> b.equals("") ? a : b + ", " + a));
+                        .reduce("", (a, b) -> a.equals("") ? b : a + ", " + b));
     }
 
     public Name getName() {

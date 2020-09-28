@@ -40,7 +40,7 @@ class JsonAdaptedRecipe {
         name = source.getName().fullName;
         ingredientString = Arrays.stream(source.getIngredient())
                 .map(item -> item.value)
-                .reduce("", (a, b) -> b.equals("") ? a : b + ", " + a);
+                .reduce("", (a, b) -> a.equals("") ? b : a + ", " + b);
 
     }
 
